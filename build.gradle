@@ -1,0 +1,25 @@
+plugins {
+  id "net.ltgt.apt" version "0.5"
+}
+
+repositories {
+  mavenCentral()
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+
+jar {
+  manifest {
+    attributes 'Main-Class': 'com.zlate87.Main'
+  }
+  doFirst {
+    from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
+  }
+}
+
+dependencies {
+  compile 'com.google.dagger:dagger:2.7'
+  apt 'com.google.dagger:dagger-compiler:2.7'
+}
